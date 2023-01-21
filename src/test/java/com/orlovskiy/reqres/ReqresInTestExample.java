@@ -1,10 +1,12 @@
+package com.orlovskiy.reqres;
+
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 
-public class ReqresInTest {
+public class ReqresInTestExample {
 
     /*
     1. Make POST request to https://reqres.in/api/login

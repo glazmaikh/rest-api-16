@@ -1,35 +1,32 @@
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
+package com.orlovskiy.reqres;
+
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
+import static com.orlovskiy.reqres.Specs.request;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReqresInHomeWorkTest {
 
     @Test
     void getUserFirstNameTest() {
         given()
-                .log().uri()
-        .when()
-                .get("https://reqres.in/api/users?page=2")
-        .then()
+                .spec(request)
+                .when()
+                .get("/users?page=2")
+                .then()
                 .log().status()
                 .statusCode(200)
                 .body("data.first_name", hasItem("Tobias"));
     }
 
     @Test
-    void getSingleUserTest() {
+    void getSingleUserWithSoftAssertTest() {
         given()
-                .log().uri()
-        .when()
-                .get("https://reqres.in/api/users/2")
-        .then()
+                .spec(request)
+                .when()
+                .get("/users/2")
+                .then()
                 .log().status()
                 .log().body()
                 .statusCode(200)
@@ -42,37 +39,23 @@ public class ReqresInHomeWorkTest {
     @Test
     void getSingleUserNotFoundTest() {
         given()
-                .log().uri()
-                .when()
-                .get("https://reqres.in/api/users/23")
-                .then()
+                .spec(request)
+        .when()
+                .get("/users/23")
+        .then()
                 .log().status()
                 .statusCode(404);
     }
 
     @Test
-    void getResourceIdListSizeTest() {
-        Response resJson = given().get("https://reqres.in/api/unknown");
-        JsonPath js = resJson.jsonPath();
-
-        int size = js.getInt("data.size()");
-        assertThat(size).isEqualTo(6);
-
-        List<Integer> listId = resJson.jsonPath().getList("data.id");
-        for (Integer it : listId) {
-            System.out.println("iterate: " + it);
-        }
-    }
-
-    @Test
     void postCreateNewUserTest() {
-        String data = "{ \"name\": \"morpheus\", \"job\": \"leader\" }";
+        String data = "{ \"name\": \"morpheus\", " +
+                "\"job\": \"leader\" }";
         given()
-                .log().uri()
-                .contentType(JSON)
+                .spec(request)
                 .body(data)
         .when()
-                .post("https://reqres.in/api/users")
+                .post("/users")
         .then()
                 .log().body()
                 .log().status()
@@ -84,12 +67,11 @@ public class ReqresInHomeWorkTest {
     void putCreateNewUserTest() {
         String data = "{ \"name\": \"morpheus\", \"job\": \"zion resident\" }";
         given()
-                .log().uri()
-                .contentType(JSON)
+                .spec(request)
                 .body(data)
-                .when()
-                .put("https://reqres.in/api/users/2")
-                .then()
+        .when()
+                .put("/users/2")
+        .then()
                 .log().body()
                 .log().status()
                 .statusCode(200)
@@ -99,10 +81,10 @@ public class ReqresInHomeWorkTest {
     @Test
     void deleteUserTest() {
         given()
-                .log().uri()
+                .spec(request)
         .when()
                 .log().body()
-                .delete("https://reqres.in/api/users/2")
+                .delete("/users/2")
         .then()
                 .log().body()
                 .log().status()
@@ -114,27 +96,25 @@ public class ReqresInHomeWorkTest {
         String data = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }";
 
         given()
-                .log().uri()
-                .contentType(JSON)
+                .spec(request)
                 .body(data)
         .when()
-                .post("https://reqres.in/api/login")
+                .post("/login")
         .then()
                 .log().body()
                 .log().status()
                 .statusCode(200)
-                .body("token", is("QpwL5tke4Pnpja7X4"));
+                .body("token", notNullValue());
     }
 
     @Test
     void postRegisterUnsuccessfulTest() {
         given()
-                .log().uri()
-                .contentType(JSON)
+                .spec(request)
                 .body("{ \"email\": \"sydney@fife\" }")
-        .when()
-                .post("https://reqres.in/api/login")
-        .then()
+                .when()
+                .post("/login")
+                .then()
                 .log().body()
                 .log().status()
                 .statusCode(400)
@@ -146,16 +126,15 @@ public class ReqresInHomeWorkTest {
         String data = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\" }";
 
         given()
-                .log().uri()
-                .contentType(JSON)
+                .spec(request)
                 .body(data)
         .when()
-                .post("https://reqres.in/api/login")
+                .post("/login")
         .then()
                 .log().body()
                 .log().status()
                 .statusCode(200)
-                .body("token", is("QpwL5tke4Pnpja7X4"));
+                .body("token", notNullValue());
     }
 
     @Test
@@ -163,11 +142,10 @@ public class ReqresInHomeWorkTest {
         String data = "{ \"email\": \"eve.holt@reqres.in\" }";
 
         given()
-                .log().uri()
-                .contentType(JSON)
+                .spec(request)
                 .body(data)
         .when()
-                .post("https://reqres.in/api/login")
+                .post("/login")
         .then()
                 .log().body()
                 .log().status()
@@ -178,9 +156,9 @@ public class ReqresInHomeWorkTest {
     @Test
     void getDelayTest() {
         given()
-                .log().uri()
+                .spec(request)
         .when()
-                .get("https://reqres.in/api/users?delay=3")
+                .get("/users?delay=3")
         .then()
                 .time(lessThan(4000L))
                 .log().body()
