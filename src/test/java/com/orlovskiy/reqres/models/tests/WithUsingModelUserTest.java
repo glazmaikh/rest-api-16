@@ -1,6 +1,6 @@
 package com.orlovskiy.reqres.models.tests;
 
-import com.orlovskiy.reqres.models.UserData;
+import com.orlovskiy.reqres.lombok.LombokUserData;
 import org.junit.jupiter.api.Test;
 
 import static com.orlovskiy.reqres.Specs.request;
@@ -23,14 +23,14 @@ public class WithUsingModelUserTest {
 
     @Test
     void singleUserWithModel() {
-        UserData data = given()
+        LombokUserData data = given()
                     .spec(request)
                 .when()
                     .get("/users/2")
                 .then()
                     .spec(responseSpec)
                     .log().body()
-                    .extract().as(UserData.class);
+                    .extract().as(LombokUserData.class);
         assertEquals(2, data.getData().getId());
     }
 }
