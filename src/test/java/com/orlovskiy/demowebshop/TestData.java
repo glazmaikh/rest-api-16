@@ -6,14 +6,14 @@ import java.util.Locale;
 import java.util.Random;
 
 public class TestData {
-    static Faker faker = new Faker(new Locale("de"));
-    static Random random = new Random();
+    public static Faker faker = new Faker(new Locale("de"));
+    public static Random random = new Random();
 
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String email = faker.internet().emailAddress();
-    String gender = getGender();
-    String password = faker.internet().password();
+    public String firstName = faker.name().firstName();
+    public String lastName = faker.name().lastName();
+    public String email = faker.internet().emailAddress();
+    public String gender = getGender();
+    public String password = faker.internet().password();
 
     public String getGender() {
         String[] genderArray = {"M", "F"};

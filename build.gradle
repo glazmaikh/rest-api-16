@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id "io.qameta.allure" version "2.11.2"
-
+    id "io.freefair.lombok" version "5.3.3.3"
 }
 
 repositories {
@@ -14,12 +14,13 @@ def junitVersion = "5.9.2"
 dependencies {
     testImplementation (
             "org.junit.jupiter:junit-jupiter:$junitVersion",
+            'io.qameta.allure:allure-rest-assured:2.20.1',
+            'org.jsoup:jsoup:1.15.3',
+            'org.assertj:assertj-core:3.24.2',
             'com.codeborne:selenide:6.11.0',
             "org.slf4j:slf4j-simple:$slf4jVersion",
             'io.rest-assured:rest-assured:5.3.0',
-            'org.assertj:assertj-core:3.24.2',
             'com.fasterxml.jackson.core:jackson-databind:2.14.1',
-            'org.projectlombok:lombok:1.18.24',
             'org.aeonbits.owner:owner:1.0.12',
             'io.qameta.allure:allure-selenide:2.20.1',
             'com.github.javafaker:javafaker:1.0.2'

@@ -1,4 +1,4 @@
-package com.orlovskiy.reqres;
+package com.orlovskiy.reqres.models.tests;
 
 import org.junit.jupiter.api.Test;
 
