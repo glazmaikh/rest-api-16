@@ -1,5 +1,7 @@
-package com.orlovskiy.demowebshop;
+package com.orlovskiy.demowebshop.tests;
 
+import com.orlovskiy.demowebshop.TestBase;
+import com.orlovskiy.demowebshop.TestData;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 
@@ -15,7 +17,7 @@ import static org.hamcrest.Matchers.is;
 
 public class AddToCardTests extends TestBase {
 
-    TestData testData = new TestData();
+    public TestData testData = new TestData();
     public String authorizationCookie;
 
     @Test
@@ -24,11 +26,11 @@ public class AddToCardTests extends TestBase {
             authorizationCookie =
                     given()
                             .spec(request)
-                            .formParam("Email", login)
-                            .formParam("Password", password)
-                    .when()
+//                            .formParam("Email", login) // todo Вызвать метод авторизации
+//                            .formParam("Password", password) // todo Вызвать метод авторизации
+                            .when()
                             .post("/login")
-                    .then()
+                            .then()
                             .statusCode(302)
                             .extract()
                             .cookie("NOPCOMMERCE.AUTH");
@@ -59,13 +61,17 @@ public class AddToCardTests extends TestBase {
                     .body("success", is(true),
                             "message", is("The product has been added to your <a href=\"/cart\">shopping cart</a>"));
         });
-        step("Open shipping card", () -> {
+        step("Open shipping card in browser", () -> {
             open("/cart");
         });
-        step("Check added gift card", () -> {
+        step("Check added gift card in browser", () -> {
             $("tr.cart-item-row").shouldHave(text("$5 Virtual Gift Card"));
             $("tr.cart-item-row").shouldHave(text("From: " + testData.firstName + " <" + testData.email + ">"));
             $("tr.cart-item-row").shouldHave(text("For: " + testData.firstName + " <" + testData.email + ">"));
+        });
+        step("Delete all items from card in browser", () -> {
+            $("td.remove-from-cart input").click();
+            $(".update-cart-button").click();
         });
     }
 
