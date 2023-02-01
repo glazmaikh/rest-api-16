@@ -26,8 +26,8 @@ public class AddToCardTests extends TestBase {
             authorizationCookie =
                     given()
                             .spec(request)
-                            .formParam("Email", login)
-                            .formParam("Password", password)
+//                            .formParam("Email", login) // todo Вызвать метод авторизации
+//                            .formParam("Password", password) // todo Вызвать метод авторизации
                             .when()
                             .post("/login")
                             .then()

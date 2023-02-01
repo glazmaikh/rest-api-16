@@ -1,9 +1,12 @@
 package com.orlovskiy.demowebshop.tests;
 
 import com.orlovskiy.demowebshop.TestBase;
+import com.orlovskiy.demowebshop.config.AuthConfig;
 import io.restassured.response.Response;
+import org.aeonbits.owner.ConfigFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
@@ -16,7 +19,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class LoginTests extends TestBase {
+
+    private static String login;
+    private static String password;
     private String authorizationCookie;
+
+    @BeforeAll
+    static void setConfig() {
+        AuthConfig config = ConfigFactory.create(AuthConfig.class, System.getProperties());
+        login = config.getLogin();
+        password = config.getPass();
+    }
 
     @Test
     void loginTest() {
