@@ -2,6 +2,7 @@ package com.orlovskiy.demowebshop.tests;
 
 import com.orlovskiy.demowebshop.TestBase;
 import com.orlovskiy.demowebshop.config.AuthConfig;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import org.aeonbits.owner.ConfigFactory;
 import org.jsoup.Jsoup;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
 
+import static com.orlovskiy.demowebshop.helpers.CustomApiListener.withCustomTemplates;
 import static com.orlovskiy.demowebshop.specs.Specs.request;
 import static com.orlovskiy.demowebshop.specs.Specs.responseSpec;
 import static io.qameta.allure.Allure.step;
@@ -36,6 +38,7 @@ public class LoginTests extends TestBase {
         step("Fill login form and get request to login/Get authorization cookie", () -> {
             authorizationCookie = given()
                     .spec(request)
+                    .filter(withCustomTemplates())
                     .formParam("Email", login)
                     .formParam("Password", password)
             .when()

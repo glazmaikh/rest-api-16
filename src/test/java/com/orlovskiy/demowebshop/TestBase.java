@@ -11,9 +11,5 @@ public class TestBase {
         RestAssured.baseURI = "https://demowebshop.tricentis.com";
         //System.setProperty("webdriver.chrome.driver", "C://webdrivers/chromedriver.exe");
         Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
-
     }
-
-
-
 }
