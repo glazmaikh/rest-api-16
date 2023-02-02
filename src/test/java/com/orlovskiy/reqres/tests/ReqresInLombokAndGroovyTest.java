@@ -1,4 +1,4 @@
-package com.orlovskiy.reqres.models.tests;
+package com.orlovskiy.reqres.tests;
 
 import com.orlovskiy.demowebshop.TestData;
 import com.orlovskiy.reqres.models.lombok.LombokCreatedRequestData;
