@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import static com.orlovskiy.reqres.Specs.request;
 import static com.orlovskiy.reqres.Specs.responseSpec;
+import static com.orlovskiy.reqres.helpers.CustomApiListener.withCustomTemplates;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +26,7 @@ public class ReqresInModelTests extends TestBase {
         step("get all users test", () -> {
             AllUsersDataModel response = given()
                     .spec(request)
+                    .filter(withCustomTemplates())
                     .formParam("page", 2)
                     .when()
                     .get("/users")
@@ -52,6 +54,7 @@ public class ReqresInModelTests extends TestBase {
         step("get support for single user test", () -> {
             SingleUserDataModel response = given()
                     .spec(request)
+                    .filter(withCustomTemplates())
                     .when()
                     .get("/users/2")
                     .then()
@@ -70,6 +73,7 @@ public class ReqresInModelTests extends TestBase {
         step("get single user not found test", () -> {
             given()
                     .spec(request)
+                    .filter(withCustomTemplates())
                     .when()
                     .get("/users/23")
                     .then()
@@ -89,6 +93,7 @@ public class ReqresInModelTests extends TestBase {
         step("get data new user test", () -> {
             UsersCrudModel response = given()
                     .spec(request)
+                    .filter(withCustomTemplates())
                     .body(newUser)
                     .when()
                     .post("/users")
@@ -114,6 +119,7 @@ public class ReqresInModelTests extends TestBase {
         step("get data from update user test", () -> {
             UsersCrudModel response = given()
                     .spec(request)
+                    .filter(withCustomTemplates())
                     .body(newUser)
                     .when()
                     .put("/users/2")
@@ -139,6 +145,7 @@ public class ReqresInModelTests extends TestBase {
         step("get success register user data test", () -> {
             given()
                     .spec(request)
+                    .filter(withCustomTemplates())
                     .body(data)
                     .when()
                     .post("/register")
@@ -161,6 +168,7 @@ public class ReqresInModelTests extends TestBase {
         step("get success login user data test", () -> {
             given()
                     .spec(request)
+                    .filter(withCustomTemplates())
                     .body(data)
                     .when()
                     .post("/register")
