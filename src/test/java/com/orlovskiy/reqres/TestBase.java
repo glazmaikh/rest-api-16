@@ -17,7 +17,8 @@ public class TestBase {
         RestAssured.baseURI = "https://reqres.in";
         RestAssured.basePath = "/api";
         //System.setProperty("webdriver.chrome.driver", "C://webdrivers/chromedriver.exe");
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+        Configuration.baseUrl = System.getProperty("base_url", "https://reqres.in");
+        Configuration.remote = System.getProperty("remote", "https://user1:1234@selenoid.autotests.cloud/wd/hub");
 
 //        DesiredCapabilities capabilities = new DesiredCapabilities();
 //        capabilities.setCapability("enableVNC", true);
