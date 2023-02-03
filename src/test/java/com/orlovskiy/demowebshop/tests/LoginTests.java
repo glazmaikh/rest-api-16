@@ -23,13 +23,14 @@ import static org.hamcrest.Matchers.is;
 
 public class LoginTests extends TestBase {
 
+    private static AuthConfig config;
     private static String login;
     private static String password;
     private String authorizationCookie;
 
     @BeforeAll
     static void setConfig() {
-        AuthConfig config = ConfigFactory.create(AuthConfig.class, System.getProperties());
+        config = ConfigFactory.create(AuthConfig.class, System.getProperties());
         login = config.getLogin();
         password = config.getPass();
     }
