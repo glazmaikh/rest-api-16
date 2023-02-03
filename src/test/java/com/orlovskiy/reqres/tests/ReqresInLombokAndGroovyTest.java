@@ -6,8 +6,8 @@ import com.orlovskiy.reqres.models.lombok.LombokResponseCreatedData;
 import com.orlovskiy.reqres.models.lombok.LombokUserData;
 import org.junit.jupiter.api.Test;
 
-import static com.orlovskiy.reqres.Specs.request;
-import static com.orlovskiy.reqres.Specs.responseSpec;
+import static com.orlovskiy.reqres.specs.Specs.request;
+import static com.orlovskiy.reqres.specs.Specs.responseSpec;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;

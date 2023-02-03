@@ -11,8 +11,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.orlovskiy.reqres.Specs.request;
-import static com.orlovskiy.reqres.Specs.responseSpec;
+import static com.orlovskiy.reqres.specs.Specs.request;
+import static com.orlovskiy.reqres.specs.Specs.responseSpec;
 import static com.orlovskiy.reqres.helpers.CustomApiListener.withCustomTemplates;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;

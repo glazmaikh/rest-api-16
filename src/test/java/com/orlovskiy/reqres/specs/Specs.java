@@ -1,4 +1,4 @@
-package com.orlovskiy.reqres;
+package com.orlovskiy.reqres.specs;
 
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;

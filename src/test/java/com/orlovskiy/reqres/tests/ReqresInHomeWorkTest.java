@@ -2,7 +2,7 @@ package com.orlovskiy.reqres.tests;
 
 import org.junit.jupiter.api.Test;
 
-import static com.orlovskiy.reqres.Specs.request;
+import static com.orlovskiy.reqres.specs.Specs.request;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
