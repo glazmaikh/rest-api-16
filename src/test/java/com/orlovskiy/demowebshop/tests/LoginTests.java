@@ -1,9 +1,7 @@
 package com.orlovskiy.demowebshop.tests;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.orlovskiy.demowebshop.TestBase;
 import com.orlovskiy.demowebshop.config.AuthConfig;
-import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import org.aeonbits.owner.ConfigFactory;
 import org.jsoup.Jsoup;
