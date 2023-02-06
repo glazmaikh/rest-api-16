@@ -1,77 +1,50 @@
 package com.orlovskiy.demowebshop.client;
 
 import com.orlovskiy.demowebshop.model.User;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-import java.util.Map;
-
-import static com.orlovskiy.demowebshop.specs.Specs.request;
 import static com.orlovskiy.demowebshop.specs.Specs.responseSpec;
+import static com.orlovskiy.demowebshop.tests.RegisterTests.client;
+import static com.orlovskiy.demowebshop.tests.RegisterTests.requestVerificationToken;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
 
 public class RegisterClient {
-    public Response register() {
-        // @formatter:off
+    public Response getVerifyToken() {
         return given()
-                .log().all()
                 .when()
-                .get("/register")
-                .then()
-                .log().all()
-                .extract()
-                .response();
-        // @formatter:on
+                .get("/register");
     }
 
-    public Response createNewUser(String token, Map<String, String> cookies, User user) {
-        // @formatter:off
+    public Response createNewUser(User user) {
         return given()
-                .log().uri()
-                .log().cookies()
-                .log().headers()
-                .cookies(cookies)
-                .contentType(ContentType.URLENC)
-                .formParam(
-                        "__RequestVerificationToken",
-                        token
-                )
-                .formParam(
-                        "Gender",
-                        user.gender()
-                )
-                .formParam(
-                        "FirstName",
-                        user.firstName()
-                )
-                .formParam(
-                        "LastName",
-                        user.lastName()
-                )
-                .formParam(
-                        "Email",
-                        user.email()
-                )
-                .formParam(
-                        "Password",
-                        user.password()
-                )
-                .formParam(
-                        "ConfirmPassword",
-                        user.password()
-                )
-                .formParam(
-                        "register-button",
-                        "Register"
-                )
+                .cookies(client.getVerifyToken().cookies())
+                .formParam("__RequestVerificationToken", requestVerificationToken)
+                .formParam("Gender", user.getGender())
+                .formParam("FirstName", user.getFirstName())
+                .formParam("LastName", user.getLastName())
+                .formParam("Email", user.getEmail())
+                .formParam("Password", user.getPassword())
+                .formParam("ConfirmPassword", user.getPassword())
+                .formParam("register-button", "Register")
                 .when()
                 .post("/register")
                 .then()
-                .log().headers()
-                .log().cookies()
-                .log().body()
+                .log().all()
+                .statusCode(302)
+                .extract().response();
+    }
+
+    public Response successRedirect(User user) {
+        return given()
+                .cookies(client.createNewUser(user).cookies())
+                .when()
+                .get("/registerresult/1")
+                .then()
+                .statusCode(200)
+                .spec(responseSpec)
+                .body("html.head.title", is("Demo Web Shop. Register"))
                 .extract()
                 .response();
-        // @formatter:on
     }
 }
